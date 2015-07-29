@@ -14,6 +14,7 @@
 		0957F19A1B68BEA200CC70F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0957F1981B68BEA200CC70F7 /* LaunchScreen.storyboard */; };
 		0957F1A51B68BEA200CC70F7 /* GitHubSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1A41B68BEA200CC70F7 /* GitHubSearchTests.swift */; };
 		0957F1B01B68BEA200CC70F7 /* GitHubSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1AF1B68BEA200CC70F7 /* GitHubSearchUITests.swift */; };
+		0957F1BE1B68BF4400CC70F7 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1BD1B68BF4400CC70F7 /* GitHub.swift */; };
 		2991CB57DC5C55BC53CABD73 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9ADBA7D92721745F7DE6E27 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		0957F1AB1B68BEA200CC70F7 /* GitHubSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0957F1AF1B68BEA200CC70F7 /* GitHubSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchUITests.swift; sourceTree = "<group>"; };
 		0957F1B11B68BEA200CC70F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0957F1BD1B68BF4400CC70F7 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
 		41032234FDB4D340D89E4EE4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		536DF35D27919BDE723FE52B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C9ADBA7D92721745F7DE6E27 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				0957F18F1B68BEA200CC70F7 /* AppDelegate.swift */,
+				0957F1BD1B68BF4400CC70F7 /* GitHub.swift */,
 				0957F1911B68BEA200CC70F7 /* ViewController.swift */,
 				0957F1931B68BEA200CC70F7 /* Main.storyboard */,
 				0957F1961B68BEA200CC70F7 /* Assets.xcassets */,
@@ -330,6 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0957F1BE1B68BF4400CC70F7 /* GitHub.swift in Sources */,
 				0957F1921B68BEA200CC70F7 /* ViewController.swift in Sources */,
 				0957F1901B68BEA200CC70F7 /* AppDelegate.swift in Sources */,
 			);
