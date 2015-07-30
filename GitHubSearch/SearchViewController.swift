@@ -15,7 +15,7 @@ class SearchViewController: UITableViewController, ApplicationContextSettable {
     lazy var searchController: UISearchController = {
         let controller = UISearchController(searchResultsController: nil)
         controller.delegate = self
-        controller.searchResultsUpdater = self
+        controller.searchBar.delegate = self
         return controller
         }()
     
@@ -51,9 +51,9 @@ class SearchViewController: UITableViewController, ApplicationContextSettable {
 extension SearchViewController: UISearchControllerDelegate {
 }
 
-extension SearchViewController: UISearchResultsUpdating {
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
         guard let searchManager = SearchRepositoriesManager(github: appContext.github, query: searchText) else { return }
         self.searchManager = searchManager
         searchManager.search { [weak self] (error) in
@@ -61,6 +61,7 @@ extension SearchViewController: UISearchResultsUpdating {
                 print(error)
             } else {
                 self?.tableView.reloadData()
+                self?.searchController.active = false
             }
         }
     }
