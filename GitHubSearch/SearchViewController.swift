@@ -41,7 +41,8 @@ class SearchViewController: UITableViewController, ApplicationContextSettable {
         let cell = tableView.dequeueReusableCellWithIdentifier("RepositoryCell", forIndexPath: indexPath)
 
         let repository = searchManager!.results[indexPath.row]
-        cell.textLabel?.text = repository.name
+        cell.textLabel?.text = repository.fullName
+        cell.detailTextLabel?.text = repository.description
 
         return cell
     }
