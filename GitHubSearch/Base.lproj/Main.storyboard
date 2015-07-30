@@ -2,9 +2,10 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="lcP-LC-FG7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--GitHub Search-->
         <scene sceneID="20k-sk-ptm">
             <objects>
                 <tableViewController id="OST-Ir-XPW" customClass="SearchViewController" customModule="GitHubSearch" customModuleProvider="target" sceneMemberID="viewController">
@@ -36,6 +37,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Z6p-el-cq1" kind="show" id="F5Z-uk-dFc"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -43,11 +47,57 @@
                             <outlet property="delegate" destination="OST-Ir-XPW" id="E0e-dD-Rok"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="Px1-JM-JtJ"/>
+                    <navigationItem key="navigationItem" title="GitHub Search" id="Px1-JM-JtJ"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UPx-OA-kaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="985" y="220"/>
+        </scene>
+        <!--Repository View Controller-->
+        <scene sceneID="Qf8-tR-Tob">
+            <objects>
+                <viewController id="Z6p-el-cq1" customClass="RepositoryViewController" customModule="GitHubSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uz5-nt-MgX"/>
+                        <viewControllerLayoutGuide type="bottom" id="NDC-TR-WUf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qfd-Lj-ZcA">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUZ-sY-TKS">
+                                <rect key="frame" x="20" y="72" width="560" height="19.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5nM-xt-4bM">
+                                <rect key="frame" x="20" y="99" width="560" height="29"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="openURL:" destination="Z6p-el-cq1" eventType="touchUpInside" id="9Di-FW-khM"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5nM-xt-4bM" firstAttribute="top" secondItem="DUZ-sY-TKS" secondAttribute="bottom" constant="8" id="7Uh-5f-ezL"/>
+                            <constraint firstItem="DUZ-sY-TKS" firstAttribute="leading" secondItem="qfd-Lj-ZcA" secondAttribute="leadingMargin" id="E4E-b4-N8H"/>
+                            <constraint firstItem="DUZ-sY-TKS" firstAttribute="top" secondItem="uz5-nt-MgX" secondAttribute="bottom" constant="8" id="Izr-TL-4Kh"/>
+                            <constraint firstItem="DUZ-sY-TKS" firstAttribute="trailing" secondItem="qfd-Lj-ZcA" secondAttribute="trailingMargin" id="TEV-Rw-wKY"/>
+                            <constraint firstItem="5nM-xt-4bM" firstAttribute="trailing" secondItem="qfd-Lj-ZcA" secondAttribute="trailingMargin" id="h87-oR-eU8"/>
+                            <constraint firstItem="5nM-xt-4bM" firstAttribute="leading" secondItem="qfd-Lj-ZcA" secondAttribute="leadingMargin" id="lwY-Ak-Rjz"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="URLButton" destination="5nM-xt-4bM" id="Xra-fn-U5B"/>
+                        <outlet property="nameLabel" destination="DUZ-sY-TKS" id="GUE-uY-4oe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bot-iU-yGw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1777" y="220"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="P9o-od-HJ8">

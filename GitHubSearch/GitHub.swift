@@ -68,6 +68,9 @@ public class GitHubAPI {
     
     // MARK: - Endpoints
     
+    /**
+    *  SeeAlso: https://developer.github.com/v3/search/#search-repositories
+    */
     public struct SearchRepositories: APIEndpoint {
         public var path = "search/repositories"
         public var method = HTTPMethod.Get
@@ -114,9 +117,9 @@ public enum JSONDecodeError: ErrorType, CustomDebugStringConvertible {
 }
 
 public struct SearchResult<ItemType: JSONDecodable>: JSONDecodable {
-    let totalCount: Int
-    let incompleteResults: Bool
-    let items: [ItemType]
+    public let totalCount: Int
+    public let incompleteResults: Bool
+    public let items: [ItemType]
     
     public init(JSON: JSONObject) throws {
         self.totalCount = try getValue(JSON, key: "total_count")
@@ -126,27 +129,28 @@ public struct SearchResult<ItemType: JSONDecodable>: JSONDecodable {
 }
 
 public struct Repository: JSONDecodable {
-    let id: Int
-    let name: String
-    let fullName: String
-    let isPrivate: Bool
-    let HTMLURL: NSURL
-    let description: String?
-    let fork: Bool
-    let URL: NSURL
-    let createdAt: NSDate
-    let updatedAt: NSDate
-    let pushedAt: NSDate?
-    let homepage: String?
-    let size: Int
-    let stargazersCount: Int
-    let watchersCount: Int
-    let language: String?
-    let forksCount: Int
-    let openIssuesCount: Int
-    let masterBranch: String?
-    let defaultBranch: String
-    let score: Double
+    public let id: Int
+    public let name: String
+    public let fullName: String
+    public let isPrivate: Bool
+    public let HTMLURL: NSURL
+    public let description: String?
+    public let fork: Bool
+    public let URL: NSURL
+    public let createdAt: NSDate
+    public let updatedAt: NSDate
+    public let pushedAt: NSDate?
+    public let homepage: String?
+    public let size: Int
+    public let stargazersCount: Int
+    public let watchersCount: Int
+    public let language: String?
+    public let forksCount: Int
+    public let openIssuesCount: Int
+    public let masterBranch: String?
+    public let defaultBranch: String
+    public let score: Double
+    public let owner: User
     
     public init(JSON: JSONObject) throws {
         self.id = try getValue(JSON, key: "id")
@@ -170,6 +174,27 @@ public struct Repository: JSONDecodable {
         self.masterBranch = try getOptionalValue(JSON, key: "master_branch")
         self.defaultBranch = try getValue(JSON, key: "default_branch")
         self.score = try getValue(JSON, key: "score")
+        self.owner = try User(JSON: getValue(JSON, key: "owner") as JSONObject)
+    }
+}
+
+public struct User: JSONDecodable {
+    public let login: String
+    public let id: Int
+    public let avatarURL: NSURL
+    public let gravatarID: String
+    public let URL: NSURL
+    public let receivedEventsURL: NSURL
+    public let type: String
+    
+    public init(JSON: JSONObject) throws {
+        self.login = try getValue(JSON, key: "login")
+        self.id = try getValue(JSON, key: "id")
+        self.avatarURL = try getURL(JSON, key: "avatar_url")
+        self.gravatarID = try getValue(JSON, key: "gravatar_id")
+        self.URL = try getURL(JSON, key: "url")
+        self.receivedEventsURL = try getURL(JSON, key: "received_events_url")
+        self.type = try getValue(JSON, key: "type")
     }
 }
 
