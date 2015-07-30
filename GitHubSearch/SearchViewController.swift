@@ -57,6 +57,18 @@ class SearchViewController: UITableViewController, ApplicationContextSettable {
         safari.delegate = self
         presentViewController(safari, animated: true, completion: nil)
     }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if let searchManager = searchManager where indexPath.row >= searchManager.results.count - 1 {
+            searchManager.search(false) { [weak self] (error) in
+                if let error = error {
+                    print(error)
+                } else {
+                    self?.tableView.reloadData()
+                }
+            }
+        }
+    }
 
 }
 
@@ -68,7 +80,7 @@ extension SearchViewController: UISearchBarDelegate {
         guard let searchText = searchBar.text else { return }
         guard let searchManager = SearchRepositoriesManager(github: appContext.github, query: searchText) else { return }
         self.searchManager = searchManager
-        searchManager.search { [weak self] (error) in
+        searchManager.search(true) { [weak self] (error) in
             if let error = error {
                 print(error)
             } else {

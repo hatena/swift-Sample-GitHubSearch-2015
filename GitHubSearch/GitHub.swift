@@ -74,14 +74,17 @@ public class GitHubAPI {
         public var parameters: [NSObject: AnyObject] {
             return [
                 "q" : query,
+                "page" : page,
             ]
         }
         public typealias ResponseType = SearchResult<Repository>
         
         public let query: String
+        public let page: Int
         
-        public init(query: String) {
+        public init(query: String, page: Int) {
             self.query = query
+            self.page = page
         }
     }
 }
@@ -128,12 +131,12 @@ public struct Repository: JSONDecodable {
     let fullName: String
     let isPrivate: Bool
     let HTMLURL: NSURL
-    let description: String
+    let description: String?
     let fork: Bool
     let URL: NSURL
     let createdAt: NSDate
     let updatedAt: NSDate
-    let pushedAt: NSDate
+    let pushedAt: NSDate?
     let homepage: String?
     let size: Int
     let stargazersCount: Int
@@ -151,12 +154,12 @@ public struct Repository: JSONDecodable {
         self.fullName = try getValue(JSON, key: "full_name")
         self.isPrivate = try getValue(JSON, key: "private")
         self.HTMLURL = try getURL(JSON, key: "html_url")
-        self.description = try getValue(JSON, key: "description")
+        self.description = try getOptionalValue(JSON, key: "description")
         self.fork = try getValue(JSON, key: "fork")
         self.URL = try getURL(JSON, key: "url")
         self.createdAt = try getDate(JSON, key: "created_at")
         self.updatedAt = try getDate(JSON, key: "updated_at")
-        self.pushedAt = try getDate(JSON, key: "pushed_at")
+        self.pushedAt = try getOptionalDate(JSON, key: "pushed_at")
         self.homepage = try getOptionalValue(JSON, key: "homepage")
         self.size = try getValue(JSON, key: "size")
         self.stargazersCount = try getValue(JSON, key: "stargazers_count")
@@ -181,6 +184,14 @@ private func getURL(JSON: JSONObject, key: String) throws -> NSURL {
     return URL
 }
 
+private func getOptionalURL(JSON: JSONObject, key: String) throws -> NSURL? {
+    guard let URLString: String = try getOptionalValue(JSON, key: key) else { return nil }
+    guard let URL = NSURL(string: URLString) else {
+        throw JSONDecodeError.CannotParseURL(key: key, value: URLString)
+    }
+    return URL
+}
+
 private let dateFormatter: NSDateFormatter = {
     let formatter = NSDateFormatter()
     formatter.calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
@@ -189,11 +200,19 @@ private let dateFormatter: NSDateFormatter = {
     }()
 
 private func getDate(JSON: JSONObject, key: String) throws -> NSDate {
-    let DateString: String = try getValue(JSON, key: key)
-    guard let Date = dateFormatter.dateFromString(DateString) else {
-        throw JSONDecodeError.CannotParseDate(key: key, value: DateString)
+    let dateString: String = try getValue(JSON, key: key)
+    guard let date = dateFormatter.dateFromString(dateString) else {
+        throw JSONDecodeError.CannotParseDate(key: key, value: dateString)
     }
-    return Date
+    return date
+}
+
+private func getOptionalDate(JSON: JSONObject, key: String) throws -> NSDate? {
+    guard let dateString: String = try getOptionalValue(JSON, key: key) else { return nil }
+    guard let date = dateFormatter.dateFromString(dateString) else {
+        throw JSONDecodeError.CannotParseDate(key: key, value: dateString)
+    }
+    return date
 }
 
 private func getValue<T>(JSON: JSONObject, key: String) throws -> T {

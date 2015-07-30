@@ -13,7 +13,11 @@ class SearchRepositoriesManager {
     let github: GitHubAPI
     let query: String
     
+    var networking: Bool = false
+    
     var results: [Repository] = []
+    var completed: Bool = false
+    var page: Int = 1
     
     init?(github: GitHubAPI, query: String) {
         self.github = github
@@ -23,13 +27,25 @@ class SearchRepositoriesManager {
         }
     }
     
-    func search(completion: (error: ErrorType?) -> Void) {
-        github.request(GitHubAPI.SearchRepositories(query: query)) { (task, response, error) -> Void in
+    func search(reload: Bool, completion: (error: ErrorType?) -> Void) -> Bool {
+        if completed || networking {
+            return false
+        }
+        networking = true
+        github.request(GitHubAPI.SearchRepositories(query: query, page: reload ? 1 : page)) { (task, response, error) in
             if let response = response {
+                if reload {
+                    self.results.removeAll()
+                    self.page = 1
+                }
                 self.results.extend(response.items)
+                self.completed = response.totalCount <= self.results.count
+                self.page++
             }
+            self.networking = false
             completion(error: error)
         }
+        return true
     }
     
 }
