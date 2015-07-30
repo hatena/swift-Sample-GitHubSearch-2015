@@ -13,9 +13,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    let appContext = ApplicationContext()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        if let navigation = window?.rootViewController as? UINavigationController,
+            let root = navigation.topViewController as? ApplicationContextSettable {
+                root.appContext = appContext
+        } else {
+            fatalError("Unexpected view controller hierarchy")
+        }
+        
         return true
     }
 

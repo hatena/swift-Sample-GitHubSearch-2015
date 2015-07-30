@@ -50,7 +50,13 @@ public class GitHubAPI {
                 handler(task: task, response: nil, error: APIError.UnexpectedResponse)
             }
         }
-        let failure = { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+        let failure = { (task: NSURLSessionDataTask!, var error: NSError!) -> Void in
+            if let errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData,
+                let errorDescription = NSString(data: errorData, encoding: NSUTF8StringEncoding) {
+                    var userInfo = error.userInfo
+                    userInfo[NSLocalizedFailureReasonErrorKey] = errorDescription
+                    error = NSError(domain: error.domain, code: error.code, userInfo: userInfo)
+            }
             handler(task: task, response: nil, error: error)
         }
         

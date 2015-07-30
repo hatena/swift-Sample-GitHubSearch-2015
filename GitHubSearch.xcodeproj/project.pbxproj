@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		0957F1901B68BEA200CC70F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F18F1B68BEA200CC70F7 /* AppDelegate.swift */; };
-		0957F1921B68BEA200CC70F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1911B68BEA200CC70F7 /* ViewController.swift */; };
 		0957F1951B68BEA200CC70F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0957F1931B68BEA200CC70F7 /* Main.storyboard */; };
 		0957F1971B68BEA200CC70F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0957F1961B68BEA200CC70F7 /* Assets.xcassets */; };
 		0957F19A1B68BEA200CC70F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0957F1981B68BEA200CC70F7 /* LaunchScreen.storyboard */; };
 		0957F1B01B68BEA200CC70F7 /* GitHubSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1AF1B68BEA200CC70F7 /* GitHubSearchUITests.swift */; };
 		0957F1BE1B68BF4400CC70F7 /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1BD1B68BF4400CC70F7 /* GitHub.swift */; };
 		0957F1C01B68D2A300CC70F7 /* GitHubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1BF1B68D2A300CC70F7 /* GitHubTests.swift */; };
+		0957F1C21B69A76200CC70F7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1C11B69A76200CC70F7 /* SearchViewController.swift */; };
+		0957F1C41B69AA8A00CC70F7 /* SearchRepositoriesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1C31B69AA8A00CC70F7 /* SearchRepositoriesManager.swift */; };
+		0957F1C61B69ACB900CC70F7 /* ApplicationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F1C51B69ACB900CC70F7 /* ApplicationContext.swift */; };
 		2991CB57DC5C55BC53CABD73 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9ADBA7D92721745F7DE6E27 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -38,7 +40,6 @@
 /* Begin PBXFileReference section */
 		0957F18C1B68BEA200CC70F7 /* GitHubSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0957F18F1B68BEA200CC70F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0957F1911B68BEA200CC70F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0957F1941B68BEA200CC70F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0957F1961B68BEA200CC70F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0957F1991B68BEA200CC70F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -50,6 +51,9 @@
 		0957F1B11B68BEA200CC70F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0957F1BD1B68BF4400CC70F7 /* GitHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
 		0957F1BF1B68D2A300CC70F7 /* GitHubTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubTests.swift; sourceTree = "<group>"; };
+		0957F1C11B69A76200CC70F7 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		0957F1C31B69AA8A00CC70F7 /* SearchRepositoriesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesManager.swift; sourceTree = "<group>"; };
+		0957F1C51B69ACB900CC70F7 /* ApplicationContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationContext.swift; sourceTree = "<group>"; };
 		41032234FDB4D340D89E4EE4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		536DF35D27919BDE723FE52B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C9ADBA7D92721745F7DE6E27 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,8 +111,10 @@
 			isa = PBXGroup;
 			children = (
 				0957F18F1B68BEA200CC70F7 /* AppDelegate.swift */,
+				0957F1C51B69ACB900CC70F7 /* ApplicationContext.swift */,
 				0957F1BD1B68BF4400CC70F7 /* GitHub.swift */,
-				0957F1911B68BEA200CC70F7 /* ViewController.swift */,
+				0957F1C31B69AA8A00CC70F7 /* SearchRepositoriesManager.swift */,
+				0957F1C11B69A76200CC70F7 /* SearchViewController.swift */,
 				0957F1931B68BEA200CC70F7 /* Main.storyboard */,
 				0957F1961B68BEA200CC70F7 /* Assets.xcassets */,
 				0957F1981B68BEA200CC70F7 /* LaunchScreen.storyboard */,
@@ -333,9 +339,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0957F1C21B69A76200CC70F7 /* SearchViewController.swift in Sources */,
+				0957F1C61B69ACB900CC70F7 /* ApplicationContext.swift in Sources */,
 				0957F1BE1B68BF4400CC70F7 /* GitHub.swift in Sources */,
-				0957F1921B68BEA200CC70F7 /* ViewController.swift in Sources */,
 				0957F1901B68BEA200CC70F7 /* AppDelegate.swift in Sources */,
+				0957F1C41B69AA8A00CC70F7 /* SearchRepositoriesManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
