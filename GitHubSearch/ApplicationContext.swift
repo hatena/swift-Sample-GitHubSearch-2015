@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// States shared in whole app
 class ApplicationContext {
     let github: GitHubAPI = GitHubAPI()
 }

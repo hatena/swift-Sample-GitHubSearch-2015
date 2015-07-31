@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+Search GitHub repositories with paging
+*/
 class SearchRepositoriesManager {
     
     let github: GitHubAPI
@@ -27,6 +30,13 @@ class SearchRepositoriesManager {
         }
     }
     
+    /**
+    Search
+    - Parameters:
+      - reload:     Reload
+      - completion: Completion handler
+    - Returns: True if executed
+    */
     func search(reload: Bool, completion: (error: ErrorType?) -> Void) -> Bool {
         if completed || networking {
             return false

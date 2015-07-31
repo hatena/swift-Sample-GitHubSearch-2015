@@ -16,6 +16,9 @@ public enum HTTPMethod {
     case Get
 }
 
+/**
+API endpoint
+*/
 public protocol APIEndpoint {
     var path: String { get }
     var method: HTTPMethod { get }
@@ -23,10 +26,18 @@ public protocol APIEndpoint {
     typealias ResponseType: JSONDecodable
 }
 
+/**
+API error
+
+- UnexpectedResponse: Unexpected structure
+*/
 public enum APIError: ErrorType {
     case UnexpectedResponse
 }
 
+/** GitHub API
+- SeeAlso: https://developer.github.com/v3/s
+*/
 public class GitHubAPI {
     private let HTTPSessionManager: AFHTTPSessionManager = {
         let manager = AFHTTPSessionManager(baseURL: NSURL(string: "https://api.github.com/"))
@@ -37,6 +48,13 @@ public class GitHubAPI {
     public init() {
     }
     
+    /**
+    Perform HTTP request for any endpoints.
+    
+    - Parameters:
+      - endpoint: API endpoint.
+      - handler:  Request results handler.
+    */
     public func request<Endpoint: APIEndpoint>(endpoint: Endpoint, handler: (task: NSURLSessionDataTask, response: Endpoint.ResponseType?, error: ErrorType?) -> Void) {
         let success = { (task: NSURLSessionDataTask!, response: AnyObject!) -> Void in
             if let JSON = response as? JSONObject {
@@ -51,6 +69,7 @@ public class GitHubAPI {
             }
         }
         let failure = { (task: NSURLSessionDataTask!, var error: NSError!) -> Void in
+            // If the error has any data, put it into "localized failure reason"
             if let errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData,
                 let errorDescription = NSString(data: errorData, encoding: NSUTF8StringEncoding) {
                     var userInfo = error.userInfo
@@ -69,7 +88,7 @@ public class GitHubAPI {
     // MARK: - Endpoints
     
     /**
-    *  SeeAlso: https://developer.github.com/v3/search/#search-repositories
+    - SeeAlso: https://developer.github.com/v3/search/#search-repositories
     */
     public struct SearchRepositories: APIEndpoint {
         public var path = "search/repositories"
@@ -85,6 +104,14 @@ public class GitHubAPI {
         public let query: String
         public let page: Int
         
+        /**
+        Search repositories
+        
+        - Parameters:
+          - query: Search query.
+          - page:  Page. 1...
+        - Returns: Search repositories API endpoint
+        */
         public init(query: String, page: Int) {
             self.query = query
             self.page = page
@@ -92,10 +119,21 @@ public class GitHubAPI {
     }
 }
 
+/**
+JSON decodable type
+*/
 public protocol JSONDecodable {
     init(JSON: JSONObject) throws
 }
 
+/**
+JSON decode error
+
+- MissingRequiredKey:   Required key is missing
+- UnexpectedType:       Value type is unexpected
+- CannotParseURL:       Value cannot be parsed as URL
+- CannotParseDate:      Value cannot be parsed as date
+*/
 public enum JSONDecodeError: ErrorType, CustomDebugStringConvertible {
     case MissingRequiredKey(String)
     case UnexpectedType(key: String, expected: Any.Type, actual: Any.Type)
@@ -116,11 +154,22 @@ public enum JSONDecodeError: ErrorType, CustomDebugStringConvertible {
     }
 }
 
+/**
+Search result data
+- SeeAlso: https://developer.github.com/v3/search/
+*/
 public struct SearchResult<ItemType: JSONDecodable>: JSONDecodable {
     public let totalCount: Int
     public let incompleteResults: Bool
     public let items: [ItemType]
     
+    /**
+    Initialize from JSON object
+    
+    - Parameter JSON: JSON object
+    - Throws: JSONDecodeError
+    - Returns: SearchResult
+    */
     public init(JSON: JSONObject) throws {
         self.totalCount = try getValue(JSON, key: "total_count")
         self.incompleteResults = try getValue(JSON, key: "incomplete_results")
@@ -128,6 +177,10 @@ public struct SearchResult<ItemType: JSONDecodable>: JSONDecodable {
     }
 }
 
+/**
+Repository data
+- SeeAlso: https://developer.github.com/v3/search/#search-repositories
+*/
 public struct Repository: JSONDecodable {
     public let id: Int
     public let name: String
@@ -152,6 +205,13 @@ public struct Repository: JSONDecodable {
     public let score: Double
     public let owner: User
     
+    /**
+    Initialize from JSON object
+    
+    - Parameter JSON: JSON object
+    - Throws: JSONDecodeError
+    - Returns: SearchResult
+    */
     public init(JSON: JSONObject) throws {
         self.id = try getValue(JSON, key: "id")
         self.name = try getValue(JSON, key: "name")
@@ -178,6 +238,10 @@ public struct Repository: JSONDecodable {
     }
 }
 
+/**
+User data
+- SeeAlso: https://developer.github.com/v3/search/#search-repositories
+*/
 public struct User: JSONDecodable {
     public let login: String
     public let id: Int
@@ -187,6 +251,13 @@ public struct User: JSONDecodable {
     public let receivedEventsURL: NSURL
     public let type: String
     
+    /**
+    Initialize from JSON object
+    
+    - Parameter JSON: JSON object
+    - Throws: JSONDecodeError
+    - Returns: SearchResult
+    */
     public init(JSON: JSONObject) throws {
         self.login = try getValue(JSON, key: "login")
         self.id = try getValue(JSON, key: "id")
@@ -201,6 +272,14 @@ public struct User: JSONDecodable {
 
 // MARK: - Utilities
 
+/**
+Get URL from JSON for key
+- Parameters:
+  - JSON: JSON object
+  - key:  Key
+- Throws: JSONDecodeError
+- Returns: URL
+*/
 private func getURL(JSON: JSONObject, key: String) throws -> NSURL {
     let URLString: String = try getValue(JSON, key: key)
     guard let URL = NSURL(string: URLString) else {
@@ -209,6 +288,14 @@ private func getURL(JSON: JSONObject, key: String) throws -> NSURL {
     return URL
 }
 
+/**
+Get URL from JSON for key
+- Parameters:
+- JSON: JSON object
+- key:  Key
+- Throws: JSONDecodeError
+- Returns: URL or nil
+*/
 private func getOptionalURL(JSON: JSONObject, key: String) throws -> NSURL? {
     guard let URLString: String = try getOptionalValue(JSON, key: key) else { return nil }
     guard let URL = NSURL(string: URLString) else {
@@ -217,6 +304,10 @@ private func getOptionalURL(JSON: JSONObject, key: String) throws -> NSURL? {
     return URL
 }
 
+/**
+Parse ISO 8601 format date string
+- SeeAlso: https://developer.github.com/v3/#schema
+*/
 private let dateFormatter: NSDateFormatter = {
     let formatter = NSDateFormatter()
     formatter.calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
@@ -224,6 +315,14 @@ private let dateFormatter: NSDateFormatter = {
     return formatter
     }()
 
+/**
+Get date from JSON for key
+- Parameters:
+- JSON: JSON object
+- key:  Key
+- Throws: JSONDecodeError
+- Returns: date
+*/
 private func getDate(JSON: JSONObject, key: String) throws -> NSDate {
     let dateString: String = try getValue(JSON, key: key)
     guard let date = dateFormatter.dateFromString(dateString) else {
@@ -232,6 +331,14 @@ private func getDate(JSON: JSONObject, key: String) throws -> NSDate {
     return date
 }
 
+/**
+Get date from JSON for key
+- Parameters:
+- JSON: JSON object
+- key:  Key
+- Throws: JSONDecodeError
+- Returns: date or nil
+*/
 private func getOptionalDate(JSON: JSONObject, key: String) throws -> NSDate? {
     guard let dateString: String = try getOptionalValue(JSON, key: key) else { return nil }
     guard let date = dateFormatter.dateFromString(dateString) else {
@@ -240,6 +347,14 @@ private func getOptionalDate(JSON: JSONObject, key: String) throws -> NSDate? {
     return date
 }
 
+/**
+Get typed value from JSON for key. Type `T` should be inferred from contexts.
+- Parameters:
+- JSON: JSON object
+- key:  Key
+- Throws: JSONDecodeError
+- Returns: Typed value
+*/
 private func getValue<T>(JSON: JSONObject, key: String) throws -> T {
     guard let value = JSON[key] else {
         throw JSONDecodeError.MissingRequiredKey(key)
@@ -250,6 +365,14 @@ private func getValue<T>(JSON: JSONObject, key: String) throws -> T {
     return typedValue
 }
 
+/**
+Get typed value from JSON for key. Type `T` should be inferred from contexts.
+- Parameters:
+- JSON: JSON object
+- key:  Key
+- Throws: JSONDecodeError
+- Returns: Typed value or nil
+*/
 private func getOptionalValue<T>(JSON: JSONObject, key: String) throws -> T? {
     guard let value = JSON[key] else {
         return nil
@@ -264,6 +387,9 @@ private func getOptionalValue<T>(JSON: JSONObject, key: String) throws -> T? {
 }
 
 private extension Array {
+    /**
+    Workaround for `map` with throwing closure
+    */
     func mapWithRethrow<T>(@noescape transform: (Array.Generator.Element) throws -> T) rethrows -> [T] {
         var mapped: [T] = []
         for element in self {
