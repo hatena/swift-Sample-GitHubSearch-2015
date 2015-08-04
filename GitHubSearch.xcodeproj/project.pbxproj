@@ -10,6 +10,8 @@
 		0952B28D1B6A0E7400155B1D /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0952B28C1B6A0E7400155B1D /* RepositoryViewController.swift */; };
 		0952B2A21B70499500155B1D /* search-repositories_q-Hatena_page-1.response in Resources */ = {isa = PBXBuildFile; fileRef = 0952B2A11B70499500155B1D /* search-repositories_q-Hatena_page-1.response */; };
 		0952B2A31B70499500155B1D /* search-repositories_q-Hatena_page-1.response in Resources */ = {isa = PBXBuildFile; fileRef = 0952B2A11B70499500155B1D /* search-repositories_q-Hatena_page-1.response */; };
+		0952B2A61B70640F00155B1D /* error_rate-limit.response in Resources */ = {isa = PBXBuildFile; fileRef = 0952B2A41B70640B00155B1D /* error_rate-limit.response */; };
+		0952B2A71B70640F00155B1D /* error_rate-limit.response in Resources */ = {isa = PBXBuildFile; fileRef = 0952B2A41B70640B00155B1D /* error_rate-limit.response */; };
 		0957F1901B68BEA200CC70F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957F18F1B68BEA200CC70F7 /* AppDelegate.swift */; };
 		0957F1951B68BEA200CC70F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0957F1931B68BEA200CC70F7 /* Main.storyboard */; };
 		0957F1971B68BEA200CC70F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0957F1961B68BEA200CC70F7 /* Assets.xcassets */; };
@@ -45,6 +47,7 @@
 		07104167BAC2E710229D963D /* Pods-GitHubSearchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubSearchTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubSearchTests/Pods-GitHubSearchTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0952B28C1B6A0E7400155B1D /* RepositoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
 		0952B2A11B70499500155B1D /* search-repositories_q-Hatena_page-1.response */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "search-repositories_q-Hatena_page-1.response"; sourceTree = "<group>"; };
+		0952B2A41B70640B00155B1D /* error_rate-limit.response */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "error_rate-limit.response"; sourceTree = "<group>"; };
 		0957F18C1B68BEA200CC70F7 /* GitHubSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0957F18F1B68BEA200CC70F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0957F1941B68BEA200CC70F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				0952B2A11B70499500155B1D /* search-repositories_q-Hatena_page-1.response */,
+				0952B2A41B70640B00155B1D /* error_rate-limit.response */,
 			);
 			path = MockResponse;
 			sourceTree = "<group>";
@@ -301,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0952B2A21B70499500155B1D /* search-repositories_q-Hatena_page-1.response in Resources */,
+				0952B2A61B70640F00155B1D /* error_rate-limit.response in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0952B2A31B70499500155B1D /* search-repositories_q-Hatena_page-1.response in Resources */,
+				0952B2A71B70640F00155B1D /* error_rate-limit.response in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
