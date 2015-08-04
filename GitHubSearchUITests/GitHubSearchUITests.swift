@@ -25,6 +25,12 @@ class GitHubSearchUITests: XCTestCase {
         app.tables["Empty list"].searchFields["Search"].tap()
         
         let searchSearchField = app.searchFields["Search"]
+        
+        searchSearchField.tap()
+        let nextKeyboardButton = app.buttons["Next keyboard"]
+        nextKeyboardButton.pressForDuration(1.0);
+        app.staticTexts["English (US)"].tap()
+        
         searchSearchField.typeText("Hatena")
         app.typeText("\n")
         
