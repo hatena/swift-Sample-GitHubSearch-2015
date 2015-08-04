@@ -9,26 +9,30 @@
 import XCTest
 
 class GitHubSearchUITests: XCTestCase {
-        
+    
     override func setUp() {
         super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         XCUIApplication().launch()
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testSearch() {
+        let app = XCUIApplication()
+        app.tables["Empty list"].searchFields["Search"].tap()
+        
+        let searchSearchField = app.searchFields["Search"]
+        searchSearchField.typeText("Hatena")
+        app.typeText("\n")
+        
+        let tablesQuery = app.tables
+        tablesQuery.cells.staticTexts["hatena/Hatena-Textbook"].tap()
+        app.buttons["https://github.com/hatena/Hatena-Textbook"].tap()
+        app.buttons["Done"].tap()
+        app.navigationBars["Hatena-Textbook"].buttons["GitHub Search"].tap()
     }
     
 }
