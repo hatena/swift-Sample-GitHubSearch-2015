@@ -1,24 +1,38 @@
+// The MIT License (MIT)
 //
-//  SearchViewController.swift
-//  GitHubSearch
+// Copyright (c) 2015 Hatena Co., Ltd.
 //
-//  Created by Hiroki Kato on 2015/07/30.
-//  Copyright © 2015年 Hatena Co., Ltd. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 import UIKit
 
 class SearchViewController: UITableViewController, ApplicationContextSettable {
-    
+
     var appContext: ApplicationContext!
-    
+
     lazy var searchController: UISearchController = {
         let controller = UISearchController(searchResultsController: nil)
         controller.delegate = self
         controller.searchBar.delegate = self
         return controller
         }()
-    
+
     var searchManager: SearchRepositoriesManager?
 
     override func viewDidLoad() {
@@ -26,7 +40,7 @@ class SearchViewController: UITableViewController, ApplicationContextSettable {
 
         tableView.tableHeaderView = searchController.searchBar
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.destinationViewController {
         case let repositoryVC as RepositoryViewController:
@@ -59,9 +73,9 @@ class SearchViewController: UITableViewController, ApplicationContextSettable {
 
         return cell
     }
-    
+
     // MARK: - Table view delegate
-    
+
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let searchManager = searchManager where indexPath.row >= searchManager.results.count - 1 {
             searchManager.search(false) { [weak self] (error) in

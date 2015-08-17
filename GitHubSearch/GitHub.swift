@@ -1,10 +1,24 @@
+// The MIT License (MIT)
 //
-//  GitHub.swift
-//  GitHubSearch
+// Copyright (c) 2015 Hatena Co., Ltd.
 //
-//  Created by Hiroki Kato on 2015/07/29.
-//  Copyright © 2015年 Hatena Co., Ltd. All rights reserved.
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 import Foundation
 
@@ -61,13 +75,13 @@ public class GitHubAPI {
         manager.requestSerializer.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         return manager
         }()
-    
+
     public init() {
     }
-    
+
     /**
     Perform HTTP request for any endpoints.
-    
+
     - Parameters:
       - endpoint: API endpoint.
       - handler:  Request results handler.
@@ -95,15 +109,15 @@ public class GitHubAPI {
             }
             handler(task: task, response: nil, error: error)
         }
-        
+
         switch endpoint.method {
         case .Get:
             HTTPSessionManager.GET(endpoint.path, parameters: endpoint.parameters.dictionary, success: success, failure: failure)
         }
     }
-    
+
     // MARK: - Endpoints
-    
+
     /**
     - SeeAlso: https://developer.github.com/v3/search/#search-repositories
     */
@@ -117,13 +131,13 @@ public class GitHubAPI {
             ]
         }
         public typealias ResponseType = SearchResult<Repository>
-        
+
         public let query: String
         public let page: Int
-        
+
         /**
         Search repositories
-        
+
         - Parameters:
           - query: Search query.
           - page:  Page. 1...
@@ -156,7 +170,7 @@ public enum JSONDecodeError: ErrorType, CustomDebugStringConvertible {
     case UnexpectedType(key: String, expected: Any.Type, actual: Any.Type)
     case CannotParseURL(key: String, value: String)
     case CannotParseDate(key: String, value: String)
-    
+
     public var debugDescription: String {
         switch self {
         case .MissingRequiredKey(let key):
@@ -179,10 +193,10 @@ public struct SearchResult<ItemType: JSONDecodable>: JSONDecodable {
     public let totalCount: Int
     public let incompleteResults: Bool
     public let items: [ItemType]
-    
+
     /**
     Initialize from JSON object
-    
+
     - Parameter JSON: JSON object
     - Throws: JSONDecodeError
     - Returns: SearchResult
@@ -221,10 +235,10 @@ public struct Repository: JSONDecodable {
     public let defaultBranch: String
     public let score: Double
     public let owner: User
-    
+
     /**
     Initialize from JSON object
-    
+
     - Parameter JSON: JSON object
     - Throws: JSONDecodeError
     - Returns: SearchResult
@@ -267,10 +281,10 @@ public struct User: JSONDecodable {
     public let URL: NSURL
     public let receivedEventsURL: NSURL
     public let type: String
-    
+
     /**
     Initialize from JSON object
-    
+
     - Parameter JSON: JSON object
     - Throws: JSONDecodeError
     - Returns: SearchResult
