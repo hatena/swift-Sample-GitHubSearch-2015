@@ -22,8 +22,25 @@ API endpoint
 public protocol APIEndpoint {
     var path: String { get }
     var method: HTTPMethod { get }
-    var parameters: [NSObject: AnyObject] { get }
+    var parameters: Parameters { get }
     typealias ResponseType: JSONDecodable
+}
+
+/**
+Request paremeters
+*/
+public struct Parameters: DictionaryLiteralConvertible {
+    public private(set) var dictionary: [String: AnyObject] = [:]
+    public typealias Key = String
+    public typealias Value = AnyObject?
+    /**
+    Initialized from dictionary literals
+    */
+    public init(dictionaryLiteral elements: (Parameters.Key, Parameters.Value)...) {
+        for case let (key, value?) in elements {
+            dictionary[key] = value
+        }
+    }
 }
 
 /**
@@ -81,7 +98,7 @@ public class GitHubAPI {
         
         switch endpoint.method {
         case .Get:
-            HTTPSessionManager.GET(endpoint.path, parameters: endpoint.parameters, success: success, failure: failure)
+            HTTPSessionManager.GET(endpoint.path, parameters: endpoint.parameters.dictionary, success: success, failure: failure)
         }
     }
     
@@ -93,7 +110,7 @@ public class GitHubAPI {
     public struct SearchRepositories: APIEndpoint {
         public var path = "search/repositories"
         public var method = HTTPMethod.Get
-        public var parameters: [NSObject: AnyObject] {
+        public var parameters: Parameters {
             return [
                 "q" : query,
                 "page" : page,
