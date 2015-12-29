@@ -62,7 +62,7 @@ class SearchRepositoriesManager {
                     self.results.removeAll()
                     self.page = 1
                 }
-                self.results.extend(response.items)
+                self.results.appendContentsOf(response.items)
                 self.completed = response.totalCount <= self.results.count
                 self.page++
             }
