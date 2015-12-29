@@ -41,7 +41,7 @@ public protocol APIEndpoint {
 }
 
 /**
-Request paremeters
+Request parameters
 */
 public struct Parameters: DictionaryLiteralConvertible {
     public private(set) var dictionary: [String: AnyObject] = [:]
@@ -67,14 +67,14 @@ public enum APIError: ErrorType {
 }
 
 /** GitHub API
-- SeeAlso: https://developer.github.com/v3/s
+- SeeAlso: https://developer.github.com/v3/
 */
 public class GitHubAPI {
     private let HTTPSessionManager: AFHTTPSessionManager = {
         let manager = AFHTTPSessionManager(baseURL: NSURL(string: "https://api.github.com/"))
         manager.requestSerializer.setValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         return manager
-        }()
+    }()
 
     public init() {
     }
