@@ -64,7 +64,7 @@ class SearchRepositoriesManager {
                 }
                 self.results.appendContentsOf(response.items)
                 self.completed = response.totalCount <= self.results.count
-                self.page++
+                self.page += 1
             }
             self.networking = false
             completion(error: error)

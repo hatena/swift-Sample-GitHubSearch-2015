@@ -37,7 +37,7 @@ public protocol APIEndpoint {
     var path: String { get }
     var method: HTTPMethod { get }
     var parameters: Parameters { get }
-    typealias ResponseType: JSONDecodable
+    associatedtype ResponseType: JSONDecodable
 }
 
 /**
@@ -99,7 +99,8 @@ public class GitHubAPI {
                 handler(task: task, response: nil, error: APIError.UnexpectedResponse)
             }
         }
-        let failure = { (task: NSURLSessionDataTask!, var error: NSError!) -> Void in
+        let failure = { (task: NSURLSessionDataTask!, error: NSError!) -> Void in
+            var error = error
             // If the error has any data, put it into "localized failure reason"
             if let errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? NSData,
                 let errorDescription = NSString(data: errorData, encoding: NSUTF8StringEncoding) {
